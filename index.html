@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting App</title>
+    <style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    
+    .container {
+        text-align: center;
+    }
+    
+    .box {
+        border: 1px solid #ccc;
+        padding: 20px;
+        width: 300px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .counter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 50%;
+        font-size: 20px;
+        height: 35px;
+        width: 35px;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    #count{
+        margin: 15px;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h1>Sabah Namazı</h1>
+            <div class="counter">
+                <button id="decrement">-</button>
+                <input type="number" id="count" min="0">
+                <button id="increment">+</button>
+            </div>
+        </div>
+    </div>
+    <script>
+                // Sayfa yüklendiğinde localStorage'dan değeri al veya varsayılan olarak 0 kullan
+        let count = parseInt(localStorage.getItem('count')) || 0;
+        const countElement = document.getElementById('count');
+        const incrementButton = document.getElementById('increment');
+        const decrementButton = document.getElementById('decrement');
+
+        // Sayfada görüntülenen sayıyı güncelle
+        function updateCount() {
+            countElement.value = count;
+        }
+
+        // Elle sayıyı girdiğinizde sayıyı güncelle
+        countElement.addEventListener('input', () => {
+            count = parseInt(countElement.value) || 0;
+            // Yeni değeri localStorage'a kaydet
+            localStorage.setItem('count', count.toString());
+        });
+
+        // + düğmesine tıklandığında sayıyı artır
+        incrementButton.addEventListener('click', () => {
+            count++;
+            updateCount();
+            // Yeni değeri localStorage'a kaydet
+            localStorage.setItem('count', count.toString());
+        });
+
+        // - düğmesine tıklandığında sayıyı azalt
+        decrementButton.addEventListener('click', () => {
+            count--;
+            updateCount();
+            // Yeni değeri localStorage'a kaydet
+            localStorage.setItem('count', count.toString());
+        });
+
+        // Sayfayı ilk kez yüklediğinizde sayıyı görüntüleyin
+        updateCount();
+
+        // Input alanını boyutunu küçült
+        countElement.style.width = '50px';
+
+        // Yukarı ve aşağı ok tuşlarına basıldığında input alanının değerini güncelle
+        countElement.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowUp') {
+                count++;
+                updateCount();
+                localStorage.setItem('count', count.toString());
+            } else if (event.key === 'ArrowDown') {
+                count--;
+                updateCount();
+                localStorage.setItem('count', count.toString());
+            }
+        });
+
+    </script>
+</body>
+</html>
